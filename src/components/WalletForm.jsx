@@ -1,83 +1,123 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, arrayOf, string } from 'prop-types';
-import { fetchCurrency } from '../redux/actions';
+import { addExpenses, fetchCurrency } from '../redux/actions';
+import currencyAPI from '../helpers/currencyAPI';
 
 class WalletForm extends Component {
+  state = {
+    id: 0,
+    value: '',
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
+    description: '',
+  };
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(fetchCurrency());
   }
 
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  };
+
+  handleClick = async () => {
+    const { dispatch } = this.props;
+    const { id } = this.state;
+
+    const data = await currencyAPI();
+    this.setState({ exchangeRates: data }, () => {
+      dispatch(addExpenses(this.state));
+      this.setState({ id: id + 1, value: '', description: '' });
+    });
+  };
+
   render() {
     const { currencies } = this.props;
+    const { value, currency,
+      method, tag, description } = this.state;
 
     return (
       <section>
-        <label htmlFor="expenseInput">
+        <label htmlFor="value">
           Valor
           <input
             type="number"
-            name="expenseInput"
-            id="expenseInput"
+            name="value"
+            id="value"
             placeholder="Valor da despesa"
+            value={ value }
+            onChange={ this.handleChange }
             data-testid="value-input"
           />
         </label>
 
-        <label htmlFor="currencySelect">
+        <label htmlFor="currency">
           Moeda
           <select
-            name="currencySelect"
-            id="currencySelect"
+            name="currency"
+            id="currency"
             data-testid="currency-input"
+            value={ currency }
+            onChange={ this.handleChange }
           >
-            { currencies.map((currency) => (
-              <option key={ currency } value={ currency }>
-                {currency}
+            { currencies.map((el) => (
+              <option key={ el } value={ el }>
+                {el}
               </option>
             ))}
           </select>
         </label>
 
-        <label htmlFor="paySelect">
+        <label htmlFor="method">
           Método de pagamento
           <select
-            name="paySelect"
-            id="paySelect"
+            name="method"
+            id="method"
+            value={ method }
+            onChange={ this.handleChange }
             data-testid="method-input"
           >
-            <option value="cash">Dinheiro</option>
-            <option value="credit">Cartão de crédito</option>
-            <option value="debit">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
 
-        <label htmlFor="tagSelect">
+        <label htmlFor="tag">
           Tag
           <select
-            name="tagSelect"
-            id="tagSelect"
+            name="tag"
+            id="tag"
+            value={ tag }
+            onChange={ this.handleChange }
             data-testid="tag-input"
           >
-            <option value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
 
-        <label htmlFor="descripInput">
+        <label htmlFor="description">
           Descrição
           <input
             type="text"
-            name="descripInput"
-            id="descripInput"
+            name="description"
+            id="description"
             placeholder="Descrição"
+            value={ description }
+            onChange={ this.handleChange }
             data-testid="description-input"
           />
         </label>
+
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </section>
     );
   }

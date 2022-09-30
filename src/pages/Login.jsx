@@ -14,9 +14,9 @@ class Login extends Component {
 
   enableButton = () => {
     const { email, password } = this.state;
-    const min = 6;
+    const minPassLength = 6;
 
-    if (password.length >= min && this.validateEmail(email)) {
+    if (password.length >= minPassLength && this.validateEmail(email)) {
       this.setState({ isDisabled: false });
     } else {
       this.setState({ isDisabled: true });
@@ -30,9 +30,7 @@ class Login extends Component {
     }, () => this.enableButton());
   };
 
-  handleClick = (e) => {
-    e.preventDefault();
-
+  handleClick = () => {
     const { email } = this.state;
     const { history: { push }, dispatch } = this.props;
 
@@ -43,52 +41,39 @@ class Login extends Component {
   render() {
     const { email, password, isDisabled } = this.state;
     return (
-      <div>
+      <main>
+        <h1>Login</h1>
         <form>
-          <h1>Login</h1>
-          <div>
-            <label htmlFor="email">
-              E-mail
-              <input
-                data-testid="email-input"
-                type="text"
-                name="email"
-                id="email"
-                placeholder="exemplo@exemplo.com"
-                value={ email }
-                onChange={ this.handleChange }
-              />
-            </label>
-          </div>
-          <label htmlFor="password">
-            Senha
-            <input
-              data-testid="password-input"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="*******"
-              value={ password }
-              onChange={ this.handleChange }
-
-            />
-          </label>
-          <button
-            type="submit"
-            onClick={ this.handleClick }
-            disabled={ isDisabled }
-          >
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="E-mail"
+            value={ email }
+            onChange={ this.handleChange }
+            data-testid="email-input"
+          />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Senha"
+            value={ password }
+            onChange={ this.handleChange }
+            data-testid="password-input"
+          />
+          <button type="button" onClick={ this.handleClick } disabled={ isDisabled }>
             Entrar
           </button>
         </form>
-      </div>
+      </main>
     );
   }
 }
 
 Login.propTypes = {
-  history: shape().isRequired,
-  dispatch: func.isRequired,
-};
+  history: shape(),
+  dispatch: func,
+}.isRequired;
 
 export default connect()(Login);
