@@ -1,4 +1,9 @@
-import { GET_CURRENCY, GET_CURRENCY_ERROR, ADD_EXPENSES } from '../actions';
+import {
+  GET_CURRENCY,
+  GET_CURRENCY_ERROR,
+  ADD_EXPENSES,
+  DELETE_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -20,6 +25,12 @@ const wallet = (state = INITIAL_STATE, { type, currencies, error, expenses }) =>
     return {
       ...state,
       expenses: [...state.expenses, expenses],
+    };
+
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...expenses],
     };
 
   default:
