@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, shape } from 'prop-types';
 import { submitLoginForm } from '../redux/actions';
-import '../Styles/Login.css';
 
 class Login extends Component {
   state = {

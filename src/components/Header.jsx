@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, arrayOf, shape } from 'prop-types';
-import '../Styles/Header.css';
 
 class Header extends Component {
   render() {
