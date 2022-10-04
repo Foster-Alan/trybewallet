@@ -9,7 +9,7 @@ beforeEach(() => renderWithRouterAndRedux(<App />));
 const { history } = renderWithRouterAndRedux(<App />);
 
 const VALID_EMAIL = 'valid@email.com';
-const VALID_PASSWORD = 'thirteen';
+const VALID_PASSWORD = '123456';
 
 describe('teste Login', () => {
   it('A página renderiza em /', () => {

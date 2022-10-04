@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWith';
 import App from '../App';
 import mockData from './helpers/mockData';
+import Wallet from '../pages/Wallet';
 
 const walletPath = '/carteira';
 
@@ -123,4 +124,11 @@ it('adiciona despesas à tabela quando o botão for clicado', async () => {
 
   await waitFor(() => expect(store.getState().wallet.expenses[0].value).toBe('40'));
   expect(value).toHaveValue(40);
+});
+
+describe('4 - Crie uma página para sua carteira com as seguintes características:', () => {
+  test('O componente deve se chamar Wallet e estar localizado na pasta "src/pages"', () => {
+    const { container } = renderWithRouterAndRedux(<Wallet />, '/carteira', {});
+    expect(container).toBeDefined();
+  });
 });

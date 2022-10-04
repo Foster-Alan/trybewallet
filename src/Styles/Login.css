@@ -1,0 +1,25 @@
+.login-component h1 {
+  font-size: 100px;
+  text-align: center;
+}
+
+.login-component input {
+  align-content: center;
+  align-self: center;
+  border-radius: 25px;
+  display: flex;
+  font-size: 50px;
+  justify-content: center;
+  margin: 2px;
+  text-align: center;
+}
+
+.login-component form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-component button {
+  font-size: 20px;
+}
