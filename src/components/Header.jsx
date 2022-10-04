@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, arrayOf, shape } from 'prop-types';
+import '../Styles/Header.css';
 
 class Header extends Component {
   render() {
@@ -13,7 +14,7 @@ class Header extends Component {
       return Number(total) + rate;
     }, '0.00');
     return (
-      <section>
+      <section className="header-conteiner">
         <p data-testid="email-field">{email}</p>
         <p>
           Despesa total:
