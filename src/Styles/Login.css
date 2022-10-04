@@ -1,0 +1,38 @@
+body {
+  background-color: rgb(3, 7, 30);
+  color: rgb(250, 163, 7);
+}
+
+.login-component h1 {
+  font-size: 70px;
+  text-align: center;
+  color: rgb(232, 93, 4);
+}
+
+.login-component form {
+  align-items: center;
+  background-color: rgb(232, 93, 4);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-left: 200px;
+  margin-right: 200px;
+
+}
+
+.login-component input {
+  border-radius: 25px;
+  font-size: 40px;
+  text-align: center;
+  margin: 8px;
+}
+
+.login-component button {
+  width: 200px;
+  height: 50px;
+  font-size: 30px;
+  margin: 30px;
+  border-radius: 25px;
+  
+}

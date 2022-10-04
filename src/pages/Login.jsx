@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, shape } from 'prop-types';
 import { submitLoginForm } from '../redux/actions';
+import '../Styles/Login.css';
 
 class Login extends Component {
   state = {
@@ -42,7 +43,7 @@ class Login extends Component {
     const { email, password, isDisabled } = this.state;
     return (
       <main className="login-component">
-        <h1>Login</h1>
+        <h1>TrybeWallet</h1>
         <form>
           <input
             type="text"

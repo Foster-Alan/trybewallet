@@ -1,0 +1,8 @@
+.wallet-conteiner {
+    display: flex;
+    border: solid blue 1px;
+}
+
+.wallet-conteiner label {
+    border: solid red 1px;
+}

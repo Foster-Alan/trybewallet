@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, arrayOf, shape } from 'prop-types';
+import '../Styles/Header.css';
+import { FaUserCircle, FaCoins } from 'react-icons/fa';
 
 class Header extends Component {
   render() {
@@ -14,16 +16,24 @@ class Header extends Component {
     }, '0.00');
     return (
       <section className="header-conteiner">
-        <p data-testid="email-field">{email}</p>
-        <p>
-          Despesa total:
-          <span data-testid="total-field">
-            {getRates}
-          </span>
-          <span data-testid="header-currency-field">
-            BRL
-          </span>
-        </p>
+        <nav>
+          <h2 data-testid="email-field">
+            <FaUserCircle />
+
+            {email}
+          </h2>
+          <h1>TRYBEWALLET</h1>
+          <p>
+            <FaCoins size={ 30 } />
+
+            <span data-testid="total-field">
+              {getRates}
+            </span>
+            <span data-testid="header-currency-field">
+              BRL
+            </span>
+          </p>
+        </nav>
       </section>
     );
   }

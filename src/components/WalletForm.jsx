@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { func, arrayOf, string, bool } from 'prop-types';
 import { addExpenses, fetchCurrency, editExpense } from '../redux/actions';
 // import currencyAPI from '../helpers/currencyAPI';
+import '../Styles/Wallet.css';
 
 class WalletForm extends Component {
   state = {
@@ -77,7 +78,7 @@ class WalletForm extends Component {
       method, tag, description } = this.state;
 
     return (
-      <section>
+      <section className="wallet-conteiner">
         <label htmlFor="value">
           Valor
           <input
