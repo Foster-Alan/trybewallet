@@ -1,121 +1,65 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { fireEvent, screen } from '@testing-library/react';
+import renderWithRouterAndRedux from './helpers/renderWith';
 import App from '../App';
 
-import { renderWithRouterAndRedux } from './helpers/renderWith';
+beforeEach(() => renderWithRouterAndRedux(<App />));
 
-const EMAIL_INPUT_TEST_ID = 'email-input';
-const PASSWORD_INPUT_TEST_ID = 'password-input';
-const VALID_EMAIL = 'alguem@email.com';
-const VALID_PASSWORD = '123456';
+const { history } = renderWithRouterAndRedux(<App />);
 
-afterEach(() => jest.clearAllMocks());
+const VALID_EMAIL = 'valid@email.com';
+const VALID_PASSWORD = 'thirteen';
 
-describe('Teste Loguin', () => {
-  it('A rota para esta página deve ser \'/\'', () => {
-    const { history } = renderWithRouterAndRedux(<App />, '/');
-    expect(history.location.pathname).toBe('/');
+describe('teste Login', () => {
+  it('A página renderiza em /', () => {
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/');
   });
 
-  it('Crie um imput para que o usuário insira seu email e senha', () => {
-    renderWithRouterAndRedux(<App />, '/');
-    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+  describe('teste inputs', () => {
+    it('Renderiza entradas para email e senha', () => {
+      const emailInput = screen.getByPlaceholderText(/e-mail/i);
+      const passwordInput = screen.getByPlaceholderText(/senha/i);
 
-    expect(email).toBeInTheDocument();
-    expect(senha).toBeInTheDocument();
+      expect(emailInput).toBeInTheDocument();
+      expect(passwordInput).toBeInTheDocument();
+    });
+
+    it('o botão só deve ser habilitado se o e-mail e a senha forem válidos', () => {
+      const emailInput = screen.getByPlaceholderText(/e-mail/i);
+      const passwordInput = screen.getByPlaceholderText(/senha/i);
+      const loginBtn = screen.getByRole('button', { name: /entrar/i });
+
+      const INVALID_EMAIL = 'invalid';
+      const INVALID_PASSWORD = 'four';
+
+      userEvent.type(emailInput, INVALID_EMAIL);
+      userEvent.type(passwordInput, INVALID_PASSWORD);
+
+      expect(loginBtn).toBeDisabled();
+
+      userEvent.type(emailInput, VALID_EMAIL);
+      userEvent.type(passwordInput, VALID_PASSWORD);
+
+      expect(loginBtn).toBeEnabled();
+    });
   });
 
-  it('Crie um botão com o texto "Entrar"', () => {
-    renderWithRouterAndRedux(<App />, '/');
+  it('clicar no botão deve ir para /carteira', () => {
+    const emailInput = screen.getByPlaceholderText(/e-mail/i);
+    const passwordInput = screen.getByPlaceholderText(/senha/i);
+    const loginBtn = screen.getByRole('button', { name: /entrar/i });
 
-    const button = screen.getByText(/Entrar/i);
-    expect(button).toBeInTheDocument();
-  });
-});
+    userEvent.type(emailInput, VALID_EMAIL);
+    userEvent.type(passwordInput, VALID_PASSWORD);
 
-describe('Verificações nos campos de email, senha e botão:', () => {
-  it('O botão de "Entrar" está desabilitado ao entrar na página', () => {
-    renderWithRouterAndRedux(<App />, '/');
+    expect(loginBtn).toBeEnabled();
 
-    const button = screen.getByText(/Entrar/i);
-    expect(button).toBeDisabled();
-  });
+    userEvent.click(loginBtn);
 
-  it('O botão de "Entrar" está desabilitado quando um email inválido é digitado', () => {
-    renderWithRouterAndRedux(<App />, '/');
-
-    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-    const button = screen.getByText(/Entrar/i);
-
-    userEvent.type(email, 'email');
-    userEvent.type(senha, VALID_PASSWORD);
-    expect(button).toBeDisabled();
-
-    userEvent.type(email, 'email@com@');
-    userEvent.type(senha, VALID_PASSWORD);
-    expect(button).toBeDisabled();
-
-    userEvent.type(email, 'emailcom@');
-    userEvent.type(senha, VALID_PASSWORD);
-    expect(button).toBeDisabled();
-
-    userEvent.type(email, 'alguem@email.');
-    userEvent.type(senha, VALID_PASSWORD);
-    expect(button).toBeDisabled();
-  });
-
-  it('O botão de "Entrar" está desabilitado quando uma senha inválida é digitada', () => {
-    renderWithRouterAndRedux(<App />, '/');
-
-    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-    const button = screen.getByText(/Entrar/i);
-
-    userEvent.type(email, VALID_EMAIL);
-    userEvent.type(senha, '23456');
-    expect(button).toBeDisabled();
-  });
-
-  it('O botão de "Entrar" está habilitado quando um email e uma senha válidos são passados', () => {
-    renderWithRouterAndRedux(<App />, '/');
-
-    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-    const button = screen.getByText(/Entrar/i);
-
-    userEvent.type(email, VALID_EMAIL);
-    userEvent.type(senha, VALID_PASSWORD);
-    expect(button).toBeEnabled();
-  });
-});
-
-describe('Teste Redux', () => {
-  it('Verifica se o email é salvo', () => {
-    const { store } = renderWithRouterAndRedux(<App />, '/');
-    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-    const button = screen.getByText(/Entrar/i);
-
-    userEvent.type(email, VALID_EMAIL);
-    userEvent.type(senha, VALID_PASSWORD);
-    fireEvent.click(button);
-
-    expect(store.getState().user.email).toBe(VALID_EMAIL);
-  });
-
-  it('A rota deve ser mudada para carteira após o clique no botão.', () => {
-    const { history } = renderWithRouterAndRedux(<App />, '/');
-    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-    const button = screen.getByText(/Entrar/i);
-
-    userEvent.type(email, VALID_EMAIL);
-    userEvent.type(senha, VALID_PASSWORD);
-    fireEvent.click(button);
-
-    expect(history.location.pathname).toBe('/carteira');
+    const addExpenseBtn = screen.getByRole('button', { name: /adicionar despesa/i });
+    expect(addExpenseBtn).toBeInTheDocument();
+    expect(loginBtn).not.toBeInTheDocument();
   });
 });

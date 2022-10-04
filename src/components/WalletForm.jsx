@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func, arrayOf, string } from 'prop-types';
-import { addExpenses, fetchCurrency } from '../redux/actions';
-import currencyAPI from '../helpers/currencyAPI';
+import { func, arrayOf, string, bool } from 'prop-types';
+import { addExpenses, fetchCurrency, editExpense } from '../redux/actions';
+// import currencyAPI from '../helpers/currencyAPI';
 
 class WalletForm extends Component {
   state = {
@@ -25,18 +25,54 @@ class WalletForm extends Component {
   };
 
   handleClick = async () => {
-    const { dispatch } = this.props;
-    const { id } = this.state;
-
-    const data = await currencyAPI();
-    this.setState({ exchangeRates: data }, () => {
-      dispatch(addExpenses(this.state));
-      this.setState({ id: id + 1, value: '', description: '' });
-    });
+    const { value, description, method, currency, tag, id } = this.state;
+    const { dispatch, isEditing } = this.props;
+    const endpoint = 'https://economia.awesomeapi.com.br/json/all';
+    const coinInfo = await fetch(endpoint);
+    const coinJSON = await coinInfo.json();
+    const expenseObj = {
+      value,
+      description,
+      method,
+      currency,
+      tag,
+      exchangeRates: coinJSON,
+      id,
+    };
+    if (!isEditing) {
+      dispatch(addExpenses(expenseObj));
+      this.setState({
+        value: '',
+        description: '',
+        currency,
+        method,
+        tag,
+        id: id + 1,
+      });
+    }
+    if (isEditing) {
+      const editObject = {
+        value,
+        description,
+        method,
+        currency,
+        tag,
+        exchangeRates: coinJSON,
+      };
+      dispatch(editExpense(editObject));
+      this.setState({
+        value: '',
+        description: '',
+        currency,
+        method,
+        tag,
+        id,
+      });
+    }
   };
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, isEditing } = this.props;
     const { value, currency,
       method, tag, description } = this.state;
 
@@ -117,7 +153,10 @@ class WalletForm extends Component {
           />
         </label>
 
-        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <button type="button" onClick={ this.handleClick }>
+          { isEditing ? 'Editar despesa' : 'Adicionar despesa' }
+
+        </button>
       </section>
     );
   }
@@ -130,6 +169,7 @@ const mapStateToProps = (state) => ({
 WalletForm.propTypes = {
   dispatch: func.isRequired,
   currencies: arrayOf(string).isRequired,
+  isEditing: bool.isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);
