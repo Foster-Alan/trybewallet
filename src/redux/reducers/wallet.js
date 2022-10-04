@@ -1,6 +1,5 @@
 import {
   GET_CURRENCY,
-  GET_CURRENCY_ERROR,
   ADD_EXPENSES,
   DELETE_EXPENSE,
   SET_EDIT_EXPENSE,
@@ -15,16 +14,13 @@ const INITIAL_STATE = {
 };
 
 const wallet = (state = INITIAL_STATE, {
-  type, currencies, error, expenses, newObject, id, editingId }) => {
+  type, currencies, expenses, newObject, id, editingId }) => {
   switch (type) {
   case GET_CURRENCY:
     return {
       ...state,
       currencies: Object.keys(currencies),
     };
-
-  case GET_CURRENCY_ERROR:
-    return { ...state, error };
 
   case ADD_EXPENSES:
     return {

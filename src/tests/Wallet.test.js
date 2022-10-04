@@ -1,134 +1,94 @@
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouterAndRedux from './helpers/renderWith';
+import { renderWithRouterAndRedux } from './helpers/renderWith';
 import App from '../App';
-import mockData from './helpers/mockData';
-import Wallet from '../pages/Wallet';
 
-const walletPath = '/carteira';
+const um = 'value-input';
+const dois = 'description-input';
 
-const mockInitialState = {
-  wallet: {
-    currencies: Object.keys(mockData),
-    expenses: [{
-      id: 0,
-      value: '10',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Saúde',
-      description: 'Descrição',
-      exchangeRates: mockData,
-    }],
-    editingId: 0,
-    isEditing: false,
-  },
-};
+describe('Teste wallet', () => {
+  it('', () => {
+    const { history } = renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'] });
 
-describe('teste Header', () => {
-  it('se é renderizado em carteira', () => {
-    const { history:
-      { location: { pathname } },
-    } = renderWithRouterAndRedux(<App />, { initialEntries: [walletPath] });
+    const { location: { pathname } } = history;
 
-    expect(pathname).toBe(walletPath);
+    expect(pathname).toBe('/carteira');
+
+    const Email = screen.getByTestId('email-field');
+    const valorDespesa = screen.getByTestId('total-field');
+    const moeda = screen.getByTestId('header-currency-field');
+    const value2 = screen.getByTestId(um);
+    const inputDescription = screen.getByTestId(dois);
+    const inputAdd = screen.getByRole('button', {
+      name: /adicionar despesa/i,
+    });
+
+    expect(Email).toBeInTheDocument();
+    expect(valorDespesa).toBeInTheDocument();
+    expect(moeda).toBeInTheDocument();
+    expect(value2).toBeInTheDocument();
+    expect(inputDescription).toBeInTheDocument();
+    expect(inputAdd).toBeInTheDocument();
   });
 
-  it('se renderiza os inputs corretamente', () => {
-    renderWithRouterAndRedux(<App />, { initialEntries: [walletPath] });
+  it('', async () => {
+    const { history } = renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'] });
 
-    const value = screen.getByRole('spinbutton', { name: /valor/i });
-    const currency = screen.getByRole('combobox', { name: /moeda/i });
-    const payMethod = screen.getByRole('combobox', { name: /método de pagamento/i });
-    const tag = screen.getByRole('combobox', { name: /tag/i });
-    const description = screen.getByRole('textbox', { name: /descrição/i });
+    const { location: { pathname } } = history;
 
-    expect(value).toBeInTheDocument();
-    expect(currency).toBeInTheDocument();
-    expect(payMethod).toBeInTheDocument();
-    expect(tag).toBeInTheDocument();
-    expect(description).toBeInTheDocument();
+    expect(pathname).toBe('/carteira');
+
+    const value2 = screen.getByTestId(um);
+    const currency = await screen.findByTestId('currency-input');
+    const inputDescription = screen.getByTestId(dois);
+    const inputAdd = screen.getByRole('button', {
+      name: /adicionar despesa/i,
+    });
+
+    expect(inputAdd).toBeInTheDocument();
+    userEvent.type(currency, 'USD');
+
+    userEvent.type(value2, '10');
+    userEvent.type(inputDescription, 'qualquer coisa');
+    userEvent.click(inputAdd);
+
+    const btnExcluir = await screen.findByTestId('delete-btn');
+    const data = await screen.findByRole('cell', {
+      name: /alimentação/i,
+    });
+
+    expect(btnExcluir).toBeInTheDocument();
+    expect(data).toBeInTheDocument();
+
+    userEvent.click(btnExcluir);
   });
-  it('renderiza o valor somado das despesas', () => {
-    renderWithRouterAndRedux(
-      <App />,
-      { initialState: mockInitialState,
-        initialEntries: [walletPath] },
-    );
+  it('', async () => {
+    renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'] });
 
-    const displaySum = screen.getByText(/despesa total:/i);
-    expect(displaySum).toHaveTextContent('47.53');
-    expect(displaySum).toHaveTextContent('BRL');
-  });
-});
+    const value = screen.getByTestId(um);
+    const imputDespesa = screen.getByTestId(dois);
+    const inputAdd = screen.getByRole('button', { name: /adicionar despesa/i });
 
-describe('testes Table e WalletForm', () => {
-  beforeEach(() => renderWithRouterAndRedux(
-    <App />,
-    { initialState: mockInitialState, initialEntries: [walletPath] },
-  ));
+    userEvent.type(value, '10');
+    userEvent.type(imputDespesa, 'coisa qualquer');
 
-  it('exclui a despesa ao clicar no botão', () => {
-    const displaySum = screen.getByText(/despesa total:/i);
-    expect(displaySum).toHaveTextContent('47.53');
+    userEvent.click(inputAdd);
+    await screen.findByTestId('edit-btn');
 
-    const deleteBtn = screen.getByRole('button', { name: /excluir/i });
-    expect(deleteBtn).toBeInTheDocument();
+    userEvent.type(value, '200');
+    userEvent.type(imputDespesa, 'bem diferente');
 
-    userEvent.click(deleteBtn);
+    userEvent.click(inputAdd);
+    await screen.findByText('bem diferente');
 
-    expect(deleteBtn).not.toBeInTheDocument();
-    expect(displaySum).toHaveTextContent('0.00');
-  });
+    const todos = await screen.findAllByTestId('edit-btn');
+    userEvent.click(todos[0]);
+    userEvent.type(value, '200');
+    userEvent.type(imputDespesa, 'bem diferente o retorno');
 
-  it('edita uma despesa se o botão for clicado', () => {
-    const displaySum = screen.getByText(/despesa total:/i);
-    const valueInput = screen.getByRole('spinbutton', { name: /valor/i });
-    const editItemBtn = screen.getByRole('button', { name: /editar/i });
-    const addBtn = screen.getByRole('button', { name: /adicionar despesa/i });
-    const valueCell = screen.getAllByRole('cell');
-
-    expect(displaySum).toHaveTextContent('47.53');
-    expect(valueInput).toHaveValue(null);
-    expect(editItemBtn).toBeInTheDocument();
-    expect(addBtn).toBeInTheDocument();
-    expect(valueCell[3]).toHaveTextContent('10.00');
-
-    userEvent.click(editItemBtn);
-
-    const editBtn = screen.getByRole('button', { name: /editar despesa/i });
-
-    expect(editBtn).toBeInTheDocument();
-    expect(valueInput).toHaveValue(null);
-
-    userEvent.type(valueInput, '10');
-    userEvent.click(editBtn);
-
-    expect(valueCell[3]).toHaveTextContent('10.00');
-  });
-});
-
-it('adiciona despesas à tabela quando o botão for clicado', async () => {
-  const { store } = renderWithRouterAndRedux(<App />, { initialEntries: [walletPath] });
-  const value = screen.getByRole('spinbutton', { name: /valor/i });
-  const payMethod = screen.getByRole('combobox', { name: /método de pagamento/i });
-  const addBtn = screen.getByRole('button', { name: /adicionar despesa/i });
-
-  expect(addBtn).toBeInTheDocument();
-  expect(value).toBeInTheDocument();
-  expect(payMethod).toBeInTheDocument();
-
-  userEvent.type(value, '40');
-  fireEvent.change(payMethod, 'Cartão de crédito');
-  userEvent.click(addBtn);
-
-  await waitFor(() => expect(store.getState().wallet.expenses[0].value).toBe('40'));
-  expect(value).toHaveValue(40);
-});
-
-describe('4 - Crie uma página para sua carteira com as seguintes características:', () => {
-  test('O componente deve se chamar Wallet e estar localizado na pasta "src/pages"', () => {
-    const { container } = renderWithRouterAndRedux(<Wallet />, '/carteira', {});
-    expect(container).toBeDefined();
+    const editarDespesa = await screen.findByText(/Editar despesa/i);
+    userEvent.click(editarDespesa);
+    await screen.findByText('bem diferente o retorno');
   });
 });

@@ -90,23 +90,24 @@ class WalletForm extends Component {
             data-testid="value-input"
           />
         </label>
-
-        <label htmlFor="currency">
-          Moeda
-          <select
-            name="currency"
-            id="currency"
-            data-testid="currency-input"
-            value={ currency }
-            onChange={ this.handleChange }
-          >
-            { currencies.map((el) => (
-              <option key={ el } value={ el }>
-                {el}
-              </option>
-            ))}
-          </select>
-        </label>
+        { currencies && (
+          <label htmlFor="currency">
+            Moeda
+            <select
+              name="currency"
+              id="currency"
+              data-testid="currency-input"
+              value={ currency }
+              onChange={ this.handleChange }
+            >
+              { currencies.map((el) => (
+                <option key={ el } value={ el }>
+                  {el}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
         <label htmlFor="method">
           Método de pagamento
