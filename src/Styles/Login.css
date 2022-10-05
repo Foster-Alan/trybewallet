@@ -4,9 +4,9 @@ body {
 }
 
 .login-component h1 {
+  color: rgb(244, 140, 6);
   font-size: 70px;
   text-align: center;
-  color: rgb(244, 140, 6);
 }
 
 .login-component form {
@@ -15,42 +15,43 @@ body {
   border-radius: 25px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   margin-left: 200px;
   margin-right: 200px;
+  padding: 20px;
 
 }
 
 .login-component input {
   border-radius: 25px;
   font-size: 40px;
-  text-align: center;
   margin: 8px;
+  text-align: center;
 }
 
 .login-component button {
-  width: 200px;
-  height: 50px;
-  font-size: 30px;
-  margin: 30px;
   border-radius: 25px;
+  font-size: 30px;
+  height: 50px;
+  margin: 30px;
+  width: 200px;
 }
 
 .css-button-sharp--grey {
-  min-width: 130px;
-  height: 40px;
-  color: #fff;
-  padding: 5px 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  outline: none;
-  border: 2px solid #495057;
   background: #495057;
+  border: 2px solid #495057;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  height: 40px;
+  min-width: 130px;
+  outline: none;
+  padding: 5px 10px;
+  position: relative;
+  transition: all 0.3s ease;
 }
+
 .css-button-sharp--grey:hover {
   background: #fff;
-  color: #495057
+  color: #495057;
 }

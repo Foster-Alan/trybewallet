@@ -3,30 +3,31 @@
 } */
 
 .header-conteiner {
-    height: 27vh;
-    background-color: rgb(53, 53, 53);
+  background-color: rgb(53, 53, 53);
+  height: 27vh;
 }
+
 .header-conteiner h1 {
   font-size: 50px;
   position: fixed;
-  top: 0;
   right: 490px;
+  top: 0;
 }
 
 .header-conteiner h2 {
   display: flex;
+  gap: 10px;
   position: fixed;
   top: 50px;
-  gap: 10px;
 }
 
 .header-conteiner p {
-    display: flex;
-    position: fixed;
-    top: 50px;
-    right: 20px;
-    gap: 10px;
-    
+  display: flex;
+  gap: 10px;
+  position: fixed;
+  right: 20px;
+  top: 50px;
+
 
 }
 

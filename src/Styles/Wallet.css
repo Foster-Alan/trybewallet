@@ -1,71 +1,75 @@
 .wallet-conteiner {
-    display: flex;
-    border: solid blue 1px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #dedede;
-    color: black;
-    /* margin: 0 400px;
+  align-items: center;
+  background-color: #dedede;
+  border: solid blue 1px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* margin: 0 400px;
     border-radius: 25px; */
 }
 
 .wallet-conteiner label {
-    display: flex;
-    padding: 5px;
-    margin: 5px;
-    min-width: 500px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 5px;
+  min-width: 500px;
+  padding: 5px;
 
 }
 
 .wallet-conteiner input {
-    text-align: center;
-    min-width: 300px;
+  min-width: 300px;
+  text-align: center;
 
 }
 
 .wallet-conteiner select {
-    text-align: center;
-    width: 308px;
+  text-align: center;
+  width: 308px;
 
 }
 
 .css-button-sliding-to-top--black {
-    min-width: 130px;
-    height: 40px;
-    color: #fff;
-    padding: 5px 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    display: inline-block;
-    outline: none;
-    border-radius: 5px;
-    z-index: 0;
-    background: #fff;
-    overflow: hidden;
-    border: 2px solid #212529;
-    color: #212529;
-    margin-bottom: 8px;
-  }
-  .css-button-sliding-to-top--black:hover {
-    color: #fff;
-  }
-  .css-button-sliding-to-top--black:hover:after {
-    height: 100%;
-  }
-  .css-button-sliding-to-top--black:after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    transition: all 0.3s ease;
-    left: 0;
-    bottom: 0;
-    height: 0;
-    width: 100%;
-    background: #212529;
-  }
+  background: #fff;
+  border: 2px solid #212529;
+  border-radius: 5px;
+  color: #fff;
+  color: #212529;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  height: 40px;
+  margin-bottom: 8px;
+  min-width: 130px;
+  outline: none;
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 0;
+}
+
+.css-button-sliding-to-top--black:hover {
+  color: #fff;
+}
+
+.css-button-sliding-to-top--black:hover:after {
+  height: 100%;
+}
+
+.css-button-sliding-to-top--black:after {
+  background: #212529;
+  bottom: 0;
+  content: '';
+  height: 0;
+  left: 0;
+  position: absolute;
+  transition: all 0.3s ease;
+  width: 100%;
+  z-index: -1;
+}
