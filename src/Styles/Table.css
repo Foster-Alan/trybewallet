@@ -1,0 +1,38 @@
+.table-conteiner {
+    background-color: rgb(53, 53, 53);
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+.table-conteiner th {
+    border: solid black 1px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+
+}
+
+.table-conteiner tbody {
+    border: solid black 1px;
+    padding: 10px;
+    text-align: center;
+
+}
+
+
+.table-conteiner td {
+    border: solid black 1px;
+    padding: 10px;
+    text-align: center;
+
+}
+
+.delete-btn {
+  background-color: red;
+
+}
+
+.edit-btn {
+    background-color: greenyellow;
+}

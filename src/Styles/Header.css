@@ -1,9 +1,10 @@
-body {
+/* body {
   min-height: 200vh;
-}
+} */
 
 .header-conteiner {
     height: 27vh;
+    background-color: rgb(53, 53, 53);
 }
 .header-conteiner h1 {
   font-size: 50px;

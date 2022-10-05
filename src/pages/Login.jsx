@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, shape } from 'prop-types';
+import { GiWallet } from 'react-icons/gi';
 import { submitLoginForm } from '../redux/actions';
 import '../Styles/Login.css';
 
@@ -43,7 +44,12 @@ class Login extends Component {
     const { email, password, isDisabled } = this.state;
     return (
       <main className="login-component">
-        <h1>TrybeWallet</h1>
+        <h1>
+          {' '}
+          <GiWallet />
+          {' '}
+          TrybeWallet
+        </h1>
         <form>
           <input
             type="text"
@@ -63,7 +69,12 @@ class Login extends Component {
             onChange={ this.handleChange }
             data-testid="password-input"
           />
-          <button type="button" onClick={ this.handleClick } disabled={ isDisabled }>
+          <button
+            className="css-button-sharp--grey"
+            type="button"
+            onClick={ this.handleClick }
+            disabled={ isDisabled }
+          >
             Entrar
           </button>
         </form>

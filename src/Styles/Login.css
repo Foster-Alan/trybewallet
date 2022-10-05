@@ -1,17 +1,17 @@
 body {
   background-color: rgb(3, 7, 30);
-  color: rgb(250, 163, 7);
+  color: rgb(244, 140, 6);
 }
 
 .login-component h1 {
   font-size: 70px;
   text-align: center;
-  color: rgb(232, 93, 4);
+  color: rgb(244, 140, 6);
 }
 
 .login-component form {
   align-items: center;
-  background-color: rgb(232, 93, 4);
+  background-color: rgb(53, 53, 53);
   border-radius: 25px;
   display: flex;
   flex-direction: column;
@@ -34,5 +34,23 @@ body {
   font-size: 30px;
   margin: 30px;
   border-radius: 25px;
-  
+}
+
+.css-button-sharp--grey {
+  min-width: 130px;
+  height: 40px;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border: 2px solid #495057;
+  background: #495057;
+}
+.css-button-sharp--grey:hover {
+  background: #fff;
+  color: #495057
 }

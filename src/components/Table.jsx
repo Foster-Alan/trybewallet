@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, shape, func } from 'prop-types';
+import { BsCashCoin, BsCoin, BsTags, BsFillTrashFill } from 'react-icons/bs';
+import { MdOutlineDescription } from 'react-icons/md';
+import { GiTrade } from 'react-icons/gi';
+import { FaCoins } from 'react-icons/fa';
+import { AiFillEdit } from 'react-icons/ai';
 import { deleteExpense, setToEdit } from '../redux/actions';
+import '../Styles/Table.css';
 
 class Table extends Component {
   handleClick = ({ target }) => {
@@ -21,16 +27,19 @@ class Table extends Component {
   render() {
     const { expenses } = this.props;
     return (
-      <div>
+      <div className="table-conteiner">
         <table>
           <thead>
             <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
+              <th><MdOutlineDescription /></th>
+              <th><BsTags /></th>
+              <th>
+                <BsCashCoin />
+
+              </th>
+              <th><BsCoin /></th>
+              <th><FaCoins /></th>
+              <th><GiTrade /></th>
               <th>Valor convertido</th>
               <th>Moeda de conversão</th>
               <th>Editar/Excluir</th>
@@ -51,20 +60,22 @@ class Table extends Component {
                   <td>Real</td>
                   <td>
                     <button
+                      className="edit-btn"
                       id={ id }
                       type="button"
                       onClick={ () => this.handleEdit(id) }
                       data-testid="edit-btn"
                     >
-                      Editar
+                      <AiFillEdit />
                     </button>
                     <button
+                      className="delete-btn"
                       id={ id }
                       type="button"
                       data-testid="delete-btn"
                       onClick={ this.handleClick }
                     >
-                      Excluir
+                      <BsFillTrashFill />
                     </button>
                   </td>
                 </tr>

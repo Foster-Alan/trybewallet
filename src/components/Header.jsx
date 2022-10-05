@@ -2,7 +2,8 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, arrayOf, shape } from 'prop-types';
 import '../Styles/Header.css';
-import { FaUserCircle, FaCoins } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
+import { GiCash } from 'react-icons/gi';
 
 class Header extends Component {
   render() {
@@ -24,7 +25,7 @@ class Header extends Component {
           </h2>
           <h1>TRYBEWALLET</h1>
           <p>
-            <FaCoins size={ 30 } />
+            <GiCash size={ 30 } />
 
             <span data-testid="total-field">
               {getRates}

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, arrayOf, string, bool } from 'prop-types';
+import { BsCashCoin, BsCoin, BsTags } from 'react-icons/bs';
+import { MdOutlineDescription } from 'react-icons/md';
+import { FaCoins } from 'react-icons/fa';
 import { addExpenses, fetchCurrency, editExpense } from '../redux/actions';
+
+
+
 // import currencyAPI from '../helpers/currencyAPI';
 import '../Styles/Wallet.css';
 
@@ -80,12 +86,12 @@ class WalletForm extends Component {
     return (
       <section className="wallet-conteiner">
         <label htmlFor="value">
-          Valor
+          <BsCoin />
           <input
             type="number"
             name="value"
             id="value"
-            placeholder="Valor da despesa"
+            placeholder="Insira um valor"
             value={ value }
             onChange={ this.handleChange }
             data-testid="value-input"
@@ -93,7 +99,7 @@ class WalletForm extends Component {
         </label>
         { currencies && (
           <label htmlFor="currency">
-            Moeda
+            <FaCoins />
             <select
               name="currency"
               id="currency"
@@ -111,7 +117,7 @@ class WalletForm extends Component {
         )}
 
         <label htmlFor="method">
-          Método de pagamento
+          <BsCashCoin />
           <select
             name="method"
             id="method"
@@ -126,7 +132,7 @@ class WalletForm extends Component {
         </label>
 
         <label htmlFor="tag">
-          Tag
+          <BsTags />
           <select
             name="tag"
             id="tag"
@@ -143,7 +149,7 @@ class WalletForm extends Component {
         </label>
 
         <label htmlFor="description">
-          Descrição
+          <MdOutlineDescription />
           <input
             type="text"
             name="description"
@@ -155,7 +161,11 @@ class WalletForm extends Component {
           />
         </label>
 
-        <button type="button" onClick={ this.handleClick }>
+        <button
+          className="css-button-sliding-to-top--black"
+          type="button"
+          onClick={ this.handleClick }
+        >
           { isEditing ? 'Editar despesa' : 'Adicionar despesa' }
 
         </button>

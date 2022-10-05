@@ -1,8 +1,71 @@
 .wallet-conteiner {
     display: flex;
     border: solid blue 1px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #dedede;
+    color: black;
+    /* margin: 0 400px;
+    border-radius: 25px; */
 }
 
 .wallet-conteiner label {
-    border: solid red 1px;
+    display: flex;
+    padding: 5px;
+    margin: 5px;
+    min-width: 500px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
 }
+
+.wallet-conteiner input {
+    text-align: center;
+    min-width: 300px;
+
+}
+
+.wallet-conteiner select {
+    text-align: center;
+    width: 308px;
+
+}
+
+.css-button-sliding-to-top--black {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #212529;
+    color: #212529;
+    margin-bottom: 8px;
+  }
+  .css-button-sliding-to-top--black:hover {
+    color: #fff;
+  }
+  .css-button-sliding-to-top--black:hover:after {
+    height: 100%;
+  }
+  .css-button-sliding-to-top--black:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    background: #212529;
+  }
