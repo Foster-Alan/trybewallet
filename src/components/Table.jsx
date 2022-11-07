@@ -27,62 +27,67 @@ class Table extends Component {
   render() {
     const { expenses } = this.props;
     return (
-      <div className="table-conteiner">
-        <table>
-          <thead>
-            <tr>
-              <th><MdOutlineDescription /></th>
-              <th><BsTags /></th>
-              <th>
-                <BsCashCoin />
+      <table className="table-conteiner">
+        <thead>
+          <tr>
+            <th>
+              <MdOutlineDescription />
+            </th>
+            <th>
+              <BsTags />
+            </th>
+            <th>
+              <BsCashCoin />
 
+            </th>
+            <th>
+              <BsCoin />
               </th>
-              <th><BsCoin /></th>
-              <th><FaCoins /></th>
-              <th><GiTrade /></th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
-            </tr>
-          </thead>
+            <th><FaCoins /></th>
+            <th><GiTrade /></th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            { expenses
-              .map(({ id, description, tag, method, value, currency, exchangeRates }) => (
-                <tr key={ id }>
-                  <td>{description}</td>
-                  <td>{tag}</td>
-                  <td>{method}</td>
-                  <td>{Number(value).toFixed(2)}</td>
-                  <td>{exchangeRates[currency].name}</td>
-                  <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
-                  <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
-                  <td>Real</td>
-                  <td>
-                    <button
-                      className="edit-btn"
-                      id={ id }
-                      type="button"
-                      onClick={ () => this.handleEdit(id) }
-                      data-testid="edit-btn"
-                    >
-                      <AiFillEdit />
-                    </button>
-                    <button
-                      className="delete-btn"
-                      id={ id }
-                      type="button"
-                      data-testid="delete-btn"
-                      onClick={ this.handleClick }
-                    >
-                      <BsFillTrashFill />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+        <tbody>
+          { expenses
+            .map(({ id, description, tag, method, value, currency, exchangeRates }) => (
+              <tr key={ id }>
+                <td>{description}</td>
+                <td>{tag}</td>
+                <td>{method}</td>
+                <td>{Number(value).toFixed(2)}</td>
+                <td>{exchangeRates[currency].name}</td>
+                <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
+                <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
+                <td>Real</td>
+                <td>
+                  <button
+                    className="edit-btn"
+                    id={ id }
+                    type="button"
+                    onClick={ () => this.handleEdit(id) }
+                    data-testid="edit-btn"
+                  >
+                    <AiFillEdit />
+                  </button>
+                  <button
+                    className="delete-btn"
+                    id={ id }
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ this.handleClick }
+                  >
+                    <BsFillTrashFill />
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+
     );
   }
 }
