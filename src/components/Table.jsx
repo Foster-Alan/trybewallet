@@ -42,9 +42,13 @@ class Table extends Component {
             </th>
             <th>
               <BsCoin />
-              </th>
-            <th><FaCoins /></th>
-            <th><GiTrade /></th>
+            </th>
+            <th>
+              <FaCoins />
+            </th>
+            <th>
+              <GiTrade />
+            </th>
             <th>Valor convertido</th>
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
