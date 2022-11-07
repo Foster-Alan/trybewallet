@@ -6,9 +6,6 @@ import { MdOutlineDescription } from 'react-icons/md';
 import { FaCoins } from 'react-icons/fa';
 import { addExpenses, fetchCurrency, editExpense } from '../redux/actions';
 
-
-
-// import currencyAPI from '../helpers/currencyAPI';
 import '../Styles/Wallet.css';
 
 class WalletForm extends Component {
